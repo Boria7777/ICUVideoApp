@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile files('D:/AndroidStudioWorkSpace/ICUVideoApp/libs/dom4j-1.6.1.jar')
+    compile files('libs/audio_device_module_java.jar')
 }

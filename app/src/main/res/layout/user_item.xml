@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="#66398eb6">
+
+
+    <TextView
+        android:id="@+id/user_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Username"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="33dp"
+        android:layout_alignBottom="@+id/UserIcon"
+        android:layout_toEndOf="@+id/UserIcon" />
+
+    <TextView
+        android:id="@+id/Online_textview"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:text="在线"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="15dp"
+        android:textColor="#FFFFFF"
+        android:layout_alignTop="@+id/UserIcon"
+        android:layout_alignEnd="@+id/user_name_textview" />
+
+    <TextView
+        android:id="@+id/UserId_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_above="@+id/user_name_textview"
+        android:layout_alignStart="@+id/user_name_textview" />
+
+    <ImageView
+        android:id="@+id/UserIcon"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/chatbutton"
+        android:background="@mipmap/loading_talk"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_alignBottom="@+id/user_name_textview"
+        android:layout_toEndOf="@+id/user_name_textview" />
+
+</RelativeLayout>

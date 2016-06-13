@@ -1,23 +1,33 @@
 package com.snydu.icuvideo.icuvideoapp.presenter;
 
-import android.util.Log;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 import com.snydu.icuvideo.icuvideoapp.MainActivity;
 import com.snydu.icuvideo.icuvideoapp.R;
+import com.snydu.icuvideo.icuvideoapp.activity.ChattingRoomListActivity;
 import com.snydu.icuvideo.icuvideoapp.event.GetXmlEvent;
 import com.snydu.icuvideo.icuvideoapp.event.SendXmlEvent;
+import com.snydu.icuvideo.icuvideoapp.model.RoomNode;
+import com.snydu.icuvideo.icuvideoapp.utils.Order;
 
+import org.dom4j.Attribute;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -27,46 +37,115 @@ public class MainPresenter {
     private MainActivity view;
     private EditText loginIdEdittext;
     private EditText loginPasswordEdittext;
-    private Button loginButton;
+    private ImageButton loginButton;
     private String tag = "Main-Presenter";
     private String LoginXML;
     private int i = 1;
+    private String SESSIONID = null;
+    private ArrayList<RoomNode> List;
+    SharedPreferences.Editor editor = null;
 
-    public void onGetView(MainActivity view) {
+    public void GetDestory() {
+        System.out.println("退出系统");
+        EventBus.getDefault().post(new SendXmlEvent("", 0x0100));
+    }
+
+    public void onGetView(final MainActivity view) {
         this.view = view;
         EventBus.getDefault().register(this);
+        SharedPreferences userInfo = view.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
+        editor = userInfo.edit();
+        editor.clear();
+        editor.commit();
+
         loginIdEdittext = (EditText) view.findViewById(R.id.Login_Id_edittext_mainactivity);
-        Button unregrister = (Button) view.findViewById(R.id.unregister);
         loginPasswordEdittext = (EditText) view.findViewById(R.id.Login_password_edittext_mainactivity);
-        loginButton = (Button) view.findViewById(R.id.Login_button_mainactivity);
+        loginButton = (ImageButton) view.findViewById(R.id.Login_button_mainactivity);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getText();
                 EventBus.getDefault().post(new SendXmlEvent(LoginXML, 0x0001));
+                //发送登录消息
+            }
+        });
 
-            }
-        });
-        unregrister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                unregister();
-            }
-        });
+        List = new ArrayList();
+//        unregrister.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//              unregister();
+//               RoomNode hehe = (RoomNode) List.get(1);
+//                System.out.println("这是hehehe的名字" + (List.get(0)).getRoomName());
+//                System.out.println("这是hehehe的值" + (List.get(0)).getRoomId());
+//            }
+//
+//        });
 
     }
 
     @Subscribe
-    public void onEventMainThread(GetXmlEvent event) throws IOException {
+    public void onEventMainThread(GetXmlEvent event) throws IOException, DocumentException {
         String msg = "in MainPresenter：" + event.getCmdCode() + event.getGetinfoXml();
-        Log.e(tag, msg);
-        Toast.makeText(view.getApplicationContext(), event.getGetinfoXml(), Toast.LENGTH_SHORT).show();
+        String xmlinfo = event.getGetinfoXml();
+//        Log.e(tag, msg);
+        if (event.getCmdCode() == Order.R_DEVICE_LOGIN) {
+            List.clear();
+            Document document = DocumentHelper.parseText(xmlinfo);
+            Element root = document.getRootElement();
+            Element element = root.element("ROOMLIST");
+            if (element != null) {
+                listNodes(element);
+            }
+            Intent intent = new Intent(view, ChattingRoomListActivity.class);
+            Bundle bundle = new Bundle();// 创建 email 内容
+            bundle.putSerializable("roomlist", List);
+            intent.putExtra("key", bundle);// 封装 email
+            view.startActivity(intent);//打开新的activity
+            unregister();
+
+        }
+
+    }
+
+    public void listNodes(Element node) {
+
+        if (node.getName().equals("ROOM")) {
+//            System.out.println("这是room的房间名字" + node.getText());
+            List<Attribute> lllist = node.attributes();
+            //遍历属性节点
+            for (Attribute attribute : lllist) {
+//                System.out.println("属性" + attribute.getName() + ":" + attribute.getValue());
+//                System.out.println("这是room的属性名" + attribute.getName());
+//                System.out.println("这是room的ID号码" + attribute.getValue());
+                List.add(new RoomNode(Integer.valueOf(attribute.getValue()).intValue(), node.getText()));
+            }
+        }
+        //同时迭代当前节点下面的所有子节点
+        //使用递归
+        Iterator<Element> iterator = node.elementIterator();
+        while (iterator.hasNext()) {
+            Element e = iterator.next();
+            listNodes(e);
+        }
     }
 
 
     private void getText() {
         String id = loginIdEdittext.getText().toString();
         String password = loginPasswordEdittext.getText().toString();
+//        SharedPreferences userInfo = view.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = userInfo.edit();
+//        editor.clear();
+        editor.putString("userid", id);
+        editor.putString("userpassword", password);
+        editor.commit();
+
+
+
+//        String hehe = userInfo.getString(id, "");
+//        System.out.println("这就是ID"+hehe);
         LoginXML = getLoginXML(id, password);
     }
 
@@ -81,7 +160,7 @@ public class MainPresenter {
         //Element element = rootElement.addElement("module");
 
         Element PLATFORMElement = rootElement.addElement("PLATFORM");
-        Element USERElement = rootElement.addElement("USER");
+        Element USERElement = rootElement.addElement("USERID");
         Element PASSWORDElement = rootElement.addElement("PASSWORD");
 
         PLATFORMElement.setText("2");
@@ -92,7 +171,6 @@ public class MainPresenter {
 
         PASSWORDElement.setText(password);
         //PASSWORDElement.addAttribute("language", "sql server");
-
         System.out.println(document.asXML());
 
         LoginXML = document.asXML();
@@ -100,7 +178,7 @@ public class MainPresenter {
     }
 
     private void unregister() {
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
 }

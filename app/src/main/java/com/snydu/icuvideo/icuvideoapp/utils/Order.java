@@ -8,57 +8,57 @@ public interface Order {
 
 	//登陆
 	final int DEVICE_LOGIN = 0x0001;
-	final int R_DEVICE_LOGIN = 0x0801;
+	final int R_DEVICE_LOGIN = 0x8001;
 
 	//进入会议室
 	final int LOGIN_MEETTINGROOM = 0x0002;
-	final int R_LOGIN_MEETTINGROOM = 0x0802;
+	final int R_LOGIN_MEETTINGROOM = 0x8002;
 
 	//申请成为主持人
 	final int APPLY_FOR_PRESENTER = 0x0003;
-	final int R_APPLY_FOR_PRESENTER = 0x0803;
+	final int R_APPLY_FOR_PRESENTER = 0x8003;
 
 	//取消成为主持人
 	final int CANCEL_FOR_PRESENTER= 0x0004;
-	final int R_CANCEL_FOR_PRESENTER = 0x0804;
+	final int R_CANCEL_FOR_PRESENTER = 0x8004;
 
 	//暂时写到这里
 
 	final int UPLOAD_TASK_RESULT = 0x0005;
-	final int R_UPLOAD_TASK_RESULT = 0x0805;
+	final int R_UPLOAD_TASK_RESULT = 0x8005;
 
 	final int SEARCH_REQUEST = 0x0006;
-	final int R_SEARCH_REQUEST = 0x0806;
+	final int R_SEARCH_REQUEST = 0x8006;
 
 	final int SEARCH_RESULT = 0x0007;
-	final int R_SEARCH_RESULT = 0x0807;
+	final int R_SEARCH_RESULT = 0x8007;
 
 	final int REQUEST_VIDEO_CHAT = 0x0008;
-	final int R_REQUEST_VIDEO_CHAT = 0x0808;
+	final int R_REQUEST_VIDEO_CHAT = 0x8008;
 
 	final int RING = 0x0009;
-	final int R_RING = 0x0809;
+	final int R_RING = 0x8009;
 
 	final int ACCEPT_RING = 0x0000A;
-	final int R_ACCEPT_RING = 0x080A;
+	final int R_ACCEPT_RING = 0x800A;
 
 	final int STOP_VIDEO_CHAT = 0x000B;
-	final int R_STOP_VIDEO_CHAT = 0x080B;
+	final int R_STOP_VIDEO_CHAT = 0x800B;
 
 	final int HUNG_UP = 0x000C;
-	final int R_HUNG_UP = 0x080C;
+	final int R_HUNG_UP = 0x800C;
 
 	final int REQUEST_USERLIST = 0x000D;
-	final int R_REQUEST_USERLIST = 0x080D;
+	final int R_REQUEST_USERLIST = 0x800D;
 	
 	final int REQUEST_POSITION = 0x000F;
-	final int R_REQUEST_POSITION = 0x080F;
+	final int R_REQUEST_POSITION = 0x800F;
 
 	final int SELF_DESTROY = 0x000E;
-	final int R_SELF_DESTROY = 0x080E;
+	final int R_SELF_DESTROY = 0x800E;
 	
 	final int REQUEST_SEARCH_SERVICE_ADDR = 0x0030;
-	final int R_REQUEST_SEARCH_SERVICE_ADDR = 0x0830;
+	final int R_REQUEST_SEARCH_SERVICE_ADDR = 0x8000;
 	
 	final String DEVICE_LOGIN_ACTION = "cn.yapon.epguard.DEVICE_LOGIN";
 	final String ACCEPT_ACTION = "cn.yapon.videochat.ACCEPT_ACTION";

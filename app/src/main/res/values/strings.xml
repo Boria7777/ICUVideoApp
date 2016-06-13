@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">ICUVideoApp</string>
+    <string name="app_name">深度动视</string>
+    <string name="loopback">Loopback</string>
+    <string name="loopbackIp">127.0.0.1</string>
+    <string name="startCall">StartCall</string>
+    <string name="stopCall">StopCall</string>
+    <string name="statsOn">Stats on</string>
+    <string name="statsOff">Stats off</string>
 </resources>
