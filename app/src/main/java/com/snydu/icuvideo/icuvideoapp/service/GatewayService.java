@@ -150,7 +150,7 @@ public class GatewayService extends Service {
 
     Runnable SecondSocketRunnable = new Runnable() {
 
-        @Override
+        @
         public void run() {
             do {
                 Log.e(Tag, "准备socket2222 重连！");

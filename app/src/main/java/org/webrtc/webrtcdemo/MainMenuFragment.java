@@ -311,7 +311,7 @@ public class MainMenuFragment extends Fragment implements MediaEngineObserver {
         outname = String.format("/vie_%d.rtp", System.currentTimeMillis());
         engine = getEngine();
 
-        engine.setIncomingVieRtpDump(true, outname);//
+//        engine.setIncomingVieRtpDump(true, outname);//
 //        开启记录
 //        engine.initchannel("192.168.1.210", 20002, 20004);
         if (params == null) {

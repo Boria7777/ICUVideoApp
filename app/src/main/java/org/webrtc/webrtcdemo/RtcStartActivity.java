@@ -193,7 +193,7 @@ public class RtcStartActivity extends Activity implements MenuStateProvider {
                 RtcactivityReLayout.getHeight();
                 width = RtcactivityReLayout.getWidth();
                 int width2 = UserListFragment.getWidth();
-                System.out.println("这是width22222222222222222" + width2);
+                System.out.println("这是width2" + width2);
                 int ButtonWidth = leftFragment.getButtonWidth();
                 setLayout(UserListFragment, width - ButtonWidth, 0);
             }

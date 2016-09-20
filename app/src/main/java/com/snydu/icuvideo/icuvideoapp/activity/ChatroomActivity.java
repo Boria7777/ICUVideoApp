@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.snydu.icuvideo.icuvideoapp.R;
 import com.snydu.icuvideo.icuvideoapp.adapter.ChatListAdapter;
@@ -47,6 +48,8 @@ public class ChatroomActivity extends Activity {
     private String touser;
     private ArrayList<UserNode> List;
     private ImageButton backbbutton;
+    private ListView heh;
+    private ScrollView da;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
